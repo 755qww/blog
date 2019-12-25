@@ -1,12 +1,13 @@
 {
-  "name": "coder-q",
+  "name": "blog",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "repository": "/blog",
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "bash deploy.sh"
   },
   "keywords": [],
   "author": "",
