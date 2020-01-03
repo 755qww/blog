@@ -1,6 +1,12 @@
 module.exports = [
     {
-        text: '前端', link: '/nose/'
+        text: '前端基础', link: '/css/'
+    },
+    {
+        text: 'JavaScript', link: '/js/'
+    },
+    {
+        text: 'Vue.js', link: '/vue/'
     },
     {
         text: '面试宝典', link: '/baodian/',

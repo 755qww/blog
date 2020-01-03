@@ -7,17 +7,10 @@ module.exports = [
 		]
 	},
 	{
-        title:'CSS',
+        title:'CSS3',
 		collapsable: true,
 		children:[
 			'/nose/notes/css',
 		]
-	},
-	{
-        title:'JavaScript',
-		collapsable: true,
-		children:[
-			'/nose/notes/js',
-		]
-    }
+	}
 ]
