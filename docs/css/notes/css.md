@@ -1,5 +1,7 @@
 
 
+
+
 # CSS基础
 
 ## 选择器
@@ -368,12 +370,12 @@ flex: 1 0 50px;  // 表示平均分配剩余空间，不缩放尺寸，基础尺
 
 ### 绘制行列
 
-栅格类似于表格，也是按照行和列进行划分，  `grid-template-column` 可以绘制列，  `grid-template-row` 可以绘制行。
+栅格类似于表格，也是按照行和列进行划分，  `grid-template-columns` 可以绘制列，  `grid-template-row` 可以绘制行。
 
 ```css
 article {
 	display: grid;
-    grid-template-column: 50% 50%;
+    grid-template-columns: 50% 50%;
     grid-template-row:　33% 33% 33%;
 }
 article div {
@@ -391,7 +393,7 @@ article div {
 article {
     display: grid;
     grid-template-row: repeat(2, 100px 50px);
-    grid-template-cloumn: repeat(3, 20%);
+    grid-template-columns: repeat(3, 20%);
 }
 ```
 
@@ -406,6 +408,192 @@ article {
 
 ### 自动填充
 
+计算每个元素的大小也是一件很繁琐的事情，因此我们可以进行比例划分，是元素自动填充整个容器，这里用到的单位是  `fr`，是一个自适应单位。
+
+```css
+article{
+    display: grid;
+    grid-template-rows:1fr 3fr 1fr;
+    gird-template-columns: 1fr 3fr 1fr;
+}
+```
+
+
+
+<img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200103142951587.png" alt="image-20200103142951587"  />
+
+这种自适应尺寸的好处就在于无论容器的大小怎么改变，都可以进行等比例缩放。
+
+### 控制尺寸波动范围
+
+行和列尺寸有多种绘制方式，还可以通过  `minmax`  控制元素的波动范围。
+
+```css
+article {
+	display: grid;
+    grid-template-columns: repeate(5, 1fr);
+    grid-template-rows: repeat(2, minmax(50px,100px))   // 表示元素尺寸的波动范围在50-100px之间
+}
+```
+
+![image-20200103152300179](C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200103152300179.png)
+
+
+
+当容器的高度为`200px`时，元素的尺寸为`100px`。
+
+![image-20200103152403435](C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200103152403435.png)
+
+当容器的高度为 `100px`时，元素的尺寸为 `50px`。也是一种根据容器大小自适应尺寸的方式，只是规定了最大最小值。
+
+### 根据栅格线编号放置元素
+
+根据设置具体的栅格线设置放置元素的具体位置，设置的数值可以是正数也可以是负数。
+
+元素定位方式：
+
+```css
+div:first-child {
+    grid-row-start:1;   //行开始
+    grid-column-start:1;  // 列开始
+    grid-row-end: 2;   // 行结束
+    grid-column-end: 2;   // 列结束
+}
+```
+
+<img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200106104145284.png" alt="image-20200106104145284" style="zoom:80%;" />
+
+### 利用栅格绘制不规则元素布局
+
+栅格绘制出来的形状只能是矩形，因此如果想要绘制不规则的元素布局，可以通过设置元素位置来完成。
+
+```css
+article {
+	width: 200px;
+    height: 200px;
+    display: grid;
+}
+article div {
+	background-color: tomato;
+    color: #fff;
+    padding: 10px;
+    background-clip: content-box;
+    grid-template-rows: repeat(2,1fr);
+    grid-template-columns: repeat(2,1fr)
+}
+article div:first-child {
+	grid-row-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-column-end: 3;
+}
+```
+
+![image-20200106110502169](C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200106110502169.png)
+
+### 栅格固定命名放置元素
+
+
+
+
+
+
+
+## 变形透视动画
+
+### 坐标系统
+
+首先需要清楚元素变形的轨迹，也就是坐标轴。通过改变坐标位置来实现变形。
+
+<img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200106165043886.png" alt="image-20200106165043886" style="zoom:80%;" />
+
+
+
+- 这里的 X 轴就是水平方向上的坐标轴
+- Y 轴就是垂直方向上的坐标轴
+- Z 轴是纵深轴，简单来说就是你看向电脑屏幕的轨迹。
+
+### 变形操作
+
+使用  `transform` 规则可以控制元素的移动、旋转、变形、倾斜、3D转换等。
+
+#### 移动
+
+```css
+div {
+    height: 100px;
+    width:100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+div:nth-child(1) {
+	background-color: darkkhaki;
+    transition: 1s;    //变形速度1s
+}
+div:nth-child(2) {
+    background-color: indianred;
+}
+
+main:hover div:nth-child(1) {
+    transform: translateX(100px);   // 在X轴上向左移动 100px。
+}
+```
+
+<img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200106170833601.png" alt="image-20200106170833601" style="zoom:80%;" />
+
+<img src="C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200106170806764.png" alt="image-20200106170806764" style="zoom:80%;" />
+
+- 以 X、Y 轴上移动时，数值都可以使用百分数来表示，比如 100% 就是表示移动当前整个盒子的距离。
+
+- 在 Z 轴上移动时，不可以使用百分数，因为纵深没有具体的数值比例作为参考。
+
+|     值     | 说明                                                         |
+| :--------: | :----------------------------------------------------------- |
+| translateX | 在X轴移动，正数向右，负数向左                                |
+| translateY | 在Y轴上移动，正数向上，负数向下                              |
+| translateZ | 在Z轴上移动，正数向前，负数向后                              |
+| translate  | 可以有两个值，第一个值代表在 X 轴上移动，第二个值代表在 Y 轴上移动 |
+
+接下来再体验下在 Z 轴上移动的效果，可以理解为一个物体在我们的视线前方进行前后移动。
+
+```css
+div {
+    height: 100px;
+    width:100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+div:nth-child(1) {
+	background-color: darkkhaki;
+    transform: perspective(900px);  //添加透视效果
+}
+div:nth-child(2) {
+    background-color: indianred;
+    transform: perspective(900px);
+}
+
+main:hover div:nth-child(1) {
+    transform: perspective(900px) translateZ(200px)  //在Z轴上移动200像素
+}
+```
+
+![image-20200109173632936](C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200109173632936.png)
+
+![image-20200109173615774](C:\Users\Admin\AppData\Roaming\Typora\typora-user-images\image-20200109173615774.png)
+
+我们都知道远小近大的道理，因此视觉上就是div放大了的效果。
+
+#### 3D移动
+
+3D的效果更加立体，也即是有Z轴的参与。可以使用  `translate3d` 同时控制3个方向的移动。
+
+`translate3d`  可以写入三个参数，分别是 X轴、Y轴、Z轴。其中需要注意，Z轴不可以用百分比表示。
 
 
 
@@ -415,24 +603,51 @@ article {
 
 
 
+### 控制元素居中的方式
 
+有三种比较常用的居中方式，分别是： 
 
+1. 使用  `flex`  布局实现居中
+2. 使用  `position`定位实现居中
+3. 使用  `transform`  移动实现居中
 
+```css
+// 第一种 flex
+div {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+```
 
+```css
+//第二种 position
+div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+    height: 200px;
+    width: 200px;
+}
+```
 
+```css
+// 第三种 transform
+div {
+	position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%)
+}
+```
 
+第二种方法和第三种差不多，都是向左向下移动50%后，再移动自身的一半。
 
+但第二种方法还需要后期计算，并且一旦改变了盒子的宽高，就需要重新计算修改。
 
-
-
-
-
-
-
-
-
-
-
+第三种方式使用百分比的形式，直接移动自身的一半，更加自适应。
 
 
 
